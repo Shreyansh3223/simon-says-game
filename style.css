@@ -43,3 +43,11 @@ h1 {
 .userflash {
   background-color: green;
 }
+
+@media (max-width:555px) {
+  .btn {
+    height: 35vw;
+    width: 35vw;
+    margin: 3vw;
+  }
+}
