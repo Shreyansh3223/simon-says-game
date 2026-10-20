@@ -44,10 +44,24 @@ h1 {
   background-color: green;
 }
 
-@media (max-width:555px) {
+@media (max-width: 555px) {
   .btn {
     height: 35vw;
     width: 35vw;
     margin: 3vw;
+  }
+}
+
+.btnPress-heading {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .btnPress-heading {
+    display: block;
+  }
+
+  .keyPress-heading {
+    display: none;
   }
 }
