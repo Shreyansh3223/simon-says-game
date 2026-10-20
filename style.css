@@ -56,6 +56,10 @@ h1 {
   display: none;
 }
 
+button {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .btnPress-heading {
     display: block;
@@ -64,4 +68,23 @@ h1 {
   .keyPress-heading {
     display: none;
   }
+
+  button {
+    height: 7vw;
+    width: 22vw;
+    border-radius: 20px;
+    border: 0.5vw solid black;
+    font-size: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+  }
+}
+
+.btn-gameStart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline-block;
 }
