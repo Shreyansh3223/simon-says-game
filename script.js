@@ -6,7 +6,8 @@ let btns = ["yellow", "red", "purple", "green"];
 let started = false;
 let level = 0;
 
-let h2 = document.querySelector("h2");
+let keyPressHeading = document.querySelector(".keyPress-heading");
+let btnPressHeading = document.querySelector(".btnPress-heading")
 
 document.addEventListener("keypress", function () {
   console.log("game is started");
@@ -17,26 +18,11 @@ document.addEventListener("keypress", function () {
   }
 });
 
-function gameFlash(btn) {
-  btn.classList.add("flash");
-
-  setTimeout(function () {
-    btn.classList.remove("flash");
-  }, 250);
-}
-
-function userFlash(btn) {
-  btn.classList.add("userflash");
-
-  setTimeout(function () {
-    btn.classList.remove("userflash");
-  }, 250);
-}
-
 function levelUp() {
   userSeq = [];
   level++;
-  h2.innerText = `Level ${level}`;
+  keyPressHeading.innerText = `Level ${level}`;
+  btnPressHeading.innerText = `Level ${level}`;
 
   let randIdx = Math.floor(Math.random() * 4);
   let randColor = btns[randIdx];
@@ -47,21 +33,17 @@ function levelUp() {
   gameFlash(randBtn);
 }
 
-function checkAns(idx) {
-  if (userSeq[idx] === gameSeq[idx]) {
-    if (userSeq.length == gameSeq.length) {
-      setTimeout(levelUp, 1000);
-    }
-  } else {
-    h2.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press any kay to start.`;
-    document.querySelector("body").style.backgroundColor = "red";
-    setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "white";
-    }, 150);
+function gameFlash(btn) {
+  btn.classList.add("flash");
 
-    highestScore();
-    reset();
-  }
+  setTimeout(function () {
+    btn.classList.remove("flash");
+  }, 250);
+}
+
+let allBtns = document.querySelectorAll(".btn");
+for (btn of allBtns) {
+  btn.addEventListener("click", btnPress);
 }
 
 function btnPress() {
@@ -74,10 +56,30 @@ function btnPress() {
   checkAns(userSeq.length - 1);
 }
 
-let allBtns = document.querySelectorAll(".btn");
+function userFlash(btn) {
+  btn.classList.add("userflash");
 
-for (btn of allBtns) {
-  btn.addEventListener("click", btnPress);
+  setTimeout(function () {
+    btn.classList.remove("userflash");
+  }, 250);
+}
+
+function checkAns(idx) {
+  if (userSeq[idx] === gameSeq[idx]) {
+    if (userSeq.length == gameSeq.length) {
+      setTimeout(levelUp, 1000);
+    }
+  } else {
+    keyPressHeading.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press any kay to start the game.`;
+    btnPressHeading.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press button to start the game.`;
+    document.querySelector("body").style.backgroundColor = "red";
+    setTimeout(function () {
+      document.querySelector("body").style.backgroundColor = "white";
+    }, 150);
+
+    highestScore();
+    reset();
+  }
 }
 
 function reset() {
@@ -85,6 +87,11 @@ function reset() {
   gameSeq = [];
   userSeq = [];
   level = 0;
+  if (window.innerWidth <= 900) {
+    startButton.style.display = "inline-block";
+  } else {
+    startButton.style.display = "none";
+  }
 }
 
 let highScore = 0;
@@ -96,3 +103,12 @@ function highestScore() {
   }
   h3.innerHTML = `Your highest score : <b>${highScore}</b>`;
 }
+
+let startButton = document.querySelector("button");
+startButton.addEventListener("click", function() {
+  if(started == false) {
+    started = true;
+    startButton.style.display = "none";
+    levelUp();
+  }
+})
